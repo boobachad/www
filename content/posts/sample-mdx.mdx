@@ -1,0 +1,38 @@
+---
+title: "Sample using mdx format"
+date: "November 1, 2023"
+readTime: "10 min read"
+status: "release"
+---
+
+# heading 1
+
+demonstrating how are mdx files parsed
+
+## another heading this time 2nd
+
+```javascript
+console.log('Hello, mdx!');
+```
+
+### Adding Interactive Elements
+
+now here we come with the cool part of mdx which is basically md+jsx wheere i can directly embed react components
+
+Here's my newsletter signup form:
+
+<NewsletterForm /> 
+
+lets try a custom a button also
+
+<CustomButton text="punch me" /> 
+
+## Conclusion
+
+<div style={{ padding: '20px', border: '2px dashed green', borderRadius: '8px', marginTop: '20px' }}>
+  <p>earlier i talked about jsx. now i wote this div via jsx was written here in this file</p>
+  <p>meaning now i can embed html elements</p>
+<p>i can <span style={{color: 'blue'}}>also</span> use inline css</p>
+</div>
+
+Thanks for sticking around!
