@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RotateCcw } from 'lucide-react';
+import { PinInput } from '@/components/base/pin-input';
 
 interface LiveAgeCalculatorProps {
   defaultBirthDate?: Date;
@@ -10,7 +11,10 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
   const [birthDate, setBirthDate] = useState<Date | null>(defaultBirthDate || null);
   const [liveAge, setLiveAge] = useState<string>('0.000000000');
   const [isDefaultDate, setIsDefaultDate] = useState<boolean>(!!defaultBirthDate);
+  const [showPinInput, setShowPinInput] = useState<boolean>(false);
+  const [pinError, setPinError] = useState<string>('');
   const timerRef = useRef<number | null>(null);
+  const pinInputRef = useRef<HTMLDivElement | null>(null);
 
   // init
   useEffect(() => {
@@ -57,6 +61,14 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
     };
   }, [birthDate]);
 
+  useEffect(() => {
+    if (showPinInput && pinInputRef.current) {
+      // Focus the first input inside the pin input group
+      const firstInput = pinInputRef.current.querySelector('input');
+      if (firstInput) (firstInput as HTMLInputElement).focus();
+    }
+  }, [showPinInput]);
+
   const handleBirthDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setBirthDateInput(value)
@@ -65,7 +77,6 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
       const parsedDate = new Date(value);
       if (!isNaN(parsedDate.getTime())) {
         setBirthDate(parsedDate);
-        // If user enters a date, it's not the default date anymore
         setIsDefaultDate(false);
       } else {
         setBirthDate(null);
@@ -81,10 +92,37 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
     setBirthDate(null);
     setLiveAge('0.000000000');
     setIsDefaultDate(false);
+    setShowPinInput(true);
+    setPinError('');
+  };
+
+  const handlePinComplete = (value: string) => {
+    if (value.length !== 8) {
+      setPinError('Please enter 8 digits (DDMMYYYY).');
+      return;
+    }
+    const day = parseInt(value.slice(0, 2), 10);
+    const month = parseInt(value.slice(2, 4), 10) - 1; // JS months are 0-based
+    const year = parseInt(value.slice(4, 8), 10);
+    const parsedDate = new Date(year, month, day);
+    if (
+      isNaN(parsedDate.getTime()) ||
+      parsedDate.getDate() !== day ||
+      parsedDate.getMonth() !== month ||
+      parsedDate.getFullYear() !== year
+    ) {
+      setPinError('Haan Kya hai ye?');
+      setLiveAge('INVALID DATE');
+      return;
+    }
+    setBirthDate(parsedDate);
+    setShowPinInput(false);
+    setIsDefaultDate(false);
+    setPinError('');
   };
 
   return (
-    <div className="bg-background text-foreground p-8 rounded-lg shadow-lg max-w-md mx-auto text-center border border-border font-mono relative">
+    <div className="bg-[#111] text-foreground p-8 rounded-2xl shadow-2xl max-w-xl w-full mx-auto text-center border font-mono relative flex flex-col items-center transition-all duration-300">
       <h2 className="text-xl font-bold mb-6 tracking-tight">Live Age Calculator</h2>
 
       {birthDate && (
@@ -97,7 +135,30 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
         </button>
       )}
 
-      {!birthDate ? (
+      {showPinInput ? (
+        <div className="mb-6 flex flex-col items-center">
+          <label className="block text-sm font-medium text-muted-foreground mb-3">
+            Enter your birth date (DDMMYYYY):
+          </label>
+          <div className="w-full flex justify-center" ref={pinInputRef}>
+            <PinInput digits={8} size="sm">
+              <PinInput.Group onComplete={handlePinComplete}>
+                <PinInput.Slot index={0} />
+                <PinInput.Slot index={1} />
+                <PinInput.Separator />
+                <PinInput.Slot index={2} />
+                <PinInput.Slot index={3} />
+                <PinInput.Separator />
+                <PinInput.Slot index={4} />
+                <PinInput.Slot index={5} />
+                <PinInput.Slot index={6} />
+                <PinInput.Slot index={7} />
+              </PinInput.Group>
+            </PinInput>
+          </div>
+          {pinError && <p className="text-destructive text-sm mt-3">{pinError}</p>}
+        </div>
+      ) : !birthDate ? (
         <div className="mb-6">
           <label htmlFor="birthDate" className="block text-sm font-medium text-muted-foreground mb-3">
             Enter your birth date:
@@ -111,7 +172,7 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
             aria-label="Enter your birth date"
           />
           {birthDateInput && !birthDate && liveAge === 'INVALID DATE' && (
-            <p className="text-destructive text-sm mt-3">Invalid date entered.</p>
+            <p className="text-destructive text-sm mt-3">Haan Kya hai ye?</p>
           )}
         </div>
       ) : (
