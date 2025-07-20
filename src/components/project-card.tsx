@@ -21,8 +21,8 @@ export function ProjectCard({
   href,
 }: ProjectCardProps) {
   return (
-    <div className="group border border-gray-800 p-6 transition-colors hover:border-blue-500/50">
-      <Link href={href} target="_blank">
+    <div className="border border-gray-800 p-6 transition-colors hover:border-blue-500/50">
+      <Link href={href} target="_blank" className="group">
         <div className="flex justify-between items-start mb-4">
           <h2 className="text-2xl font-bold text-white group-hover:text-blue-500 transition-colors">
             {title}

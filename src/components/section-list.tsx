@@ -30,15 +30,15 @@ export function SectionList({
       <div className="space-y-8">
         {items.map((item, index) => (
           <div key={item.title} className="group">
-            <Link href={item.href} target="_blank">
+            <Link href={item.href} target="_blank" className="inline-block">
               <h3 className="text-xl font-semibold mb-1 text-foreground group-hover:text-blue-500 transition-colors duration-200">
                 {item.title}
               </h3>
-              <p className="text-sm text-muted-foreground mb-2">
-                {item.role} {item.period && `(${item.period})`}
-              </p>
-              <p className="text-gray-300">{item.description}</p>
             </Link>
+            <p className="text-sm text-muted-foreground mb-2">
+              {item.role} {item.period && `(${item.period})`}
+            </p>
+            <p className="text-gray-300">{item.description}</p>
           </div>
         ))}
       </div>

@@ -107,7 +107,7 @@ function createHeading(level: number) {
         return createElement(`h${level}`, { id: slug, className: headingClass }, [
             <span
                 key="hash"
-                className="absolute -left-6 opacity-0 group-hover:opacity-100 text-blue-500 transition-opacity duration-150 select-none"
+                className="absolute -left-6 opacity-0 group-hover:opacity-100 text-white transition-opacity duration-150 select-none"
                 aria-hidden="true"
             >
                 #
