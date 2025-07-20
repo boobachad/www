@@ -21,7 +21,7 @@ async function loadGoogleFont(font: string, text: string) {
 export async function GET(request: Request) {
   const { searchParams, protocol, host } = new URL(request.url)
   const title = searchParams.get("title")
-  const text = title ? `boobachad • ${title}` : "boobachad' home"
+  const text = title ? `boobachad • ${title}` : "boobachad's home"
 
   const imageResponse = await fetch(`${protocol}//${host}/pic1.jpg`);
   const imageData = await imageResponse.arrayBuffer();
@@ -65,7 +65,7 @@ export async function GET(request: Request) {
         >
           <span
             style={{
-              color: "#ff6b35",
+              color: "#3b82f6",
               fontSize: 48,
               flexShrink: 0,
             }}

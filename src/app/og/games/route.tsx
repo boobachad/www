@@ -21,7 +21,7 @@ async function loadGoogleFont(font: string, text: string) {
 export async function GET(request: Request) {
     const { searchParams, protocol, host } = new URL(request.url)
     const title = searchParams.get("title")
-    const text = title ? `boobachad's luminary • ${title}` : "boobachad's luminary"
+    const text = title ? `boobachad's games • ${title}` : "boobachad's games"
 
     const imageResponse = await fetch(`${protocol}//${host}/pic1.jpg`);
     const imageData = await imageResponse.arrayBuffer();

@@ -121,6 +121,14 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
     setPinError('');
   };
 
+  const INVALID_DATE_MESSAGES = [
+    "Time traveler detected!",
+    "Nice try, Doctor Who.",
+    "That's not how birthdays work...",
+    "You are... timeless!",
+    "Oops! That's a date from another universe."
+  ];
+
   return (
     <div className="bg-[#111] text-foreground p-8 rounded-2xl shadow-2xl max-w-xl w-full mx-auto text-center border font-mono relative flex flex-col items-center transition-all duration-300">
       <h2 className="text-xl font-bold mb-6 tracking-tight">Live Age Calculator</h2>
@@ -176,11 +184,19 @@ const LiveAgeCalculator: React.FC<LiveAgeCalculatorProps> = ({ defaultBirthDate 
           )}
         </div>
       ) : (
-        <div className="space-y-4">
-          <p className="text-lg text-muted-foreground">{isDefaultDate ? "i'm" : "you are"}</p>
-          <p className="text-5xl font-mono font-bold text-foreground">{liveAge}</p>
-          <p className="text-lg text-muted-foreground">years old</p>
-        </div>
+        liveAge === 'INVALID DATE' ? (
+          <div className="space-y-4">
+            <p className="text-3xl font-mono font-bold text-destructive">
+              {INVALID_DATE_MESSAGES[Math.floor(Math.random() * INVALID_DATE_MESSAGES.length)]}
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <p className="text-lg text-muted-foreground">{isDefaultDate ? "i'm" : "you are"}</p>
+            <p className="text-5xl font-mono font-bold text-foreground">{liveAge}</p>
+            <p className="text-lg text-muted-foreground">years old</p>
+          </div>
+        )
       )}
     </div>
   );
