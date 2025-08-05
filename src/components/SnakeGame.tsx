@@ -10,7 +10,7 @@ type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
 type GameState = 'INIT' | 'RUNNING' | 'GAME_OVER';
 
-const GRID_SIZE = 20;
+const GRID_SIZE = 16;
 const INITIAL_SNAKE: Point[] = [
     { x: 0, y: Math.floor(GRID_SIZE / 2) },
     { x: -1, y: Math.floor(GRID_SIZE / 2) },
@@ -193,7 +193,7 @@ export default function SnakeGame() {
         setGameState('INIT');
     }, []);
 
-    const size = Math.min(500, window.innerWidth - 32);
+    const size = Math.min(400, window.innerWidth - 32);
     const cell = size / GRID_SIZE;
 
     return (
@@ -235,14 +235,10 @@ export default function SnakeGame() {
                             width={cell}
                             height={cell}
                             rx={cell * 0.3}
-                            // color: head=tailhead
-                            fill={i === 0 || i === snake.length - 1 ? '#2563eb' : '#60a5fa'}
+                            fill={i === 0 ? '#2563eb' : '#60a5fa'}
                             className="transition-all duration-75"
-                            opacity={
-                                i === 0 ? 1 : 0.4 + (Math.abs(i - Math.floor(snake.length / 2)) / Math.floor(snake.length / 2)) * 0.6
-                            }
+                            opacity={i === 0 ? 1 : 0.85 - i * 0.03}
                         />
-
                     ))}
                 </svg>
                 {/* Game Over overlay */}
