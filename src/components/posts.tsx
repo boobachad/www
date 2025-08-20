@@ -104,19 +104,29 @@ export function Posts({ posts }: PostsProps) {
       )}
 
       <div className="space-y-8 sm:space-y-4">
-        {filteredPosts.map((item, index) => (
-          <div
-            key={item.slug}
-            ref={
-              isSearching && index === selectedIndex ? selectedItemRef : null
-            }
-          >
-            <PostItem
-              post={item}
-              isSelected={isSearching && index === selectedIndex}
-            />
+        {filteredPosts.length > 0 ? (
+          filteredPosts.map((item, index) => (
+            <div
+              key={item.slug}
+              ref={
+                isSearching && index === selectedIndex ? selectedItemRef : null
+              }
+            >
+              <PostItem
+                post={item}
+                isSelected={isSearching && index === selectedIndex}
+              />
+            </div>
+          ))
+        ) : posts.length === 0 ? (
+          <div className="text-center py-12 text-gray-400">
+            <p className="text-lg">Nothing here… except unlimited potential.</p>
           </div>
-        ))}
+        ) : (
+          <div className="text-center py-12 text-gray-400">
+            <p className="text-lg">No posts match your search.</p>
+          </div>
+        )}
       </div>
     </>
   )
