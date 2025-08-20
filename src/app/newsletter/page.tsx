@@ -35,24 +35,30 @@ export default function NewsletterPage() {
 
                     <h2 className="mt-12 mb-4 text-lg font-semibold">Past Issues:</h2>
                     <div className="flex flex-col gap-4">
-                        {issues.map((issue) => (
-                            <Link
-                                key={issue.slug}
-                                href={`/newsletter/${issue.slug}`}
-                                tabIndex={-1}
-                                className="focus:outline-none"
-                            >
-                                <div
-                                    className="group bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 shadow-sm cursor-pointer transition-transform duration-150 hover:scale-[1.01]"
+                        {issues.length > 0 ? (
+                            issues.map((issue) => (
+                                <Link
+                                    key={issue.slug}
+                                    href={`/newsletter/${issue.slug}`}
+                                    tabIndex={-1}
+                                    className="focus:outline-none"
                                 >
-                                    <div className="text-xs text-neutral-500 mb-1 font-mono">{getDateOrRemark(issue.metadata.date)}</div>
-                                    <div className="text-lg font-medium text-neutral-800 dark:text-neutral-100">{issue.metadata.title}</div>
-                                    <div className={"overflow-hidden transition-all duration-300 max-h-0 opacity-0 -translate-y-2 group-hover:max-h-8 group-hover:opacity-100 group-hover:translate-y-0 text-blue-500 text-sm font-mono"}>
-                                        Read this issue
+                                    <div
+                                        className="group bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 shadow-sm cursor-pointer transition-transform duration-150 hover:scale-[1.01]"
+                                    >
+                                        <div className="text-xs text-neutral-500 mb-1 font-mono">{getDateOrRemark(issue.metadata.date)}</div>
+                                        <div className="text-lg font-medium text-neutral-800 dark:text-neutral-100">{issue.metadata.title}</div>
+                                        <div className={"overflow-hidden transition-all duration-300 max-h-0 opacity-0 -translate-y-2 group-hover:max-h-8 group-hover:opacity-100 group-hover:translate-y-0 text-blue-500 text-sm font-mono"}>
+                                            Read this issue
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="text-center py-12 text-gray-400">
+                                <p className="text-lg">404 thoughts not found (yet)</p>
+                            </div>
+                        )}
                     </div>
                 </main>
             </div>
