@@ -1,3 +1,7 @@
+Todo:
+add papershelf(includes papers + articles read + additional thoughts or notes
+add bookshelf(includes books read + notes on them if)
+
 # new_inspiration
 
 To install dependencies:
